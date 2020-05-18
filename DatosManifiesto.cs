@@ -33,6 +33,11 @@ namespace Documentos
         public string LibretaTripulanteTerrestreConductorAuxiliar { get; set; }
         public string LugarCarga { get; set; }
         public string LugarDescarga { get; set; }
+        public Boolean APeligrosa { get; set; }
+        public Boolean BSustanciaQuimica { get; set; }
+        public Boolean CPerecible { get; set; }
+        public Boolean DOtra { get; set; }
+        public String DOtraTexto { get; set; }
         public string NumeroIdentificacionContenedores { get; set; }
         public string NumeroPrecintosAduaneros { get; set; }
         public string NroCartaPorte { get; set; }
