@@ -3,3 +3,5 @@
 *.cdm
 *bin/
 *obj/
+*.TTF
+
