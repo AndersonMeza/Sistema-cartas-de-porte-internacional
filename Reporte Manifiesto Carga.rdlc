@@ -451,36 +451,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <Textbox Name="Textbox76">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>=First(Fields!NumeroCodigo.Value, "DataSet1")</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox75</rd:DefaultName>
-                    <Top>0.74083cm</Top>
-                    <Left>5.54827cm</Left>
-                    <Height>0.6cm</Height>
-                    <Width>2.5cm</Width>
-                    <ZIndex>2</ZIndex>
-                    <Style>
-                      <Border>
-                        <Style>None</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
                 </ReportItems>
                 <KeepTogether>true</KeepTogether>
                 <Left>6.53529cm</Left>
@@ -2740,7 +2710,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=First(Fields!DOtraTexto.Value, "DataSet1")</Value>
+                            <Value>=IIF(First(Fields!DOtra.Value, "DataSet1"),First(Fields!DOtraTexto.Value, "DataSet1"),"")</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
                             </Style>
