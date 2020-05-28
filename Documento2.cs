@@ -103,7 +103,7 @@ namespace Documentos
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-             Base nueva = new Base();
+            Base nueva = new Base();
 
             DataTable consulta_numECU = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
@@ -148,9 +148,8 @@ namespace Documentos
 
             }
 
-
             DatosManifiesto datos = new DatosManifiesto();
-            datos.CodigoManifiesto = comboBox1.Text +numero ;
+            datos.CodigoManifiesto = comboBox1.Text+numero;
             datos.NumeroCodigo = numericUpDown1.Value;
             datos.CertificadoIdoneidad = richTextBox1.Text;
             datos.PermisoPrestacion = richTextBox2.Text;
