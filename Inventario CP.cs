@@ -86,7 +86,7 @@ namespace Documentos
             string pais = comboBox1.Text;
             
             //datos.numero = richTextBox33.Text;
-            datos.codigo = comboBox1.Text;
+            datos.codigo = comboBox1.Text+numero;
             datos.nomDirRemitente = richTextBox1.Text;
             datos.nomDirDestinatario= richTextBox2.Text;
             datos.nomDirConsignatario = richTextBox3.Text;
