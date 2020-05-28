@@ -103,53 +103,8 @@ namespace Documentos
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            Base nueva = new Base();
-
-            DataTable consulta_numECU = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
-            + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'ECU'))"
-            + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
-            DataTable consulta_numCOL = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
-            + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'COL'))"
-            + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
-            DataTable consulta_numPE = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
-            + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'PE'))"
-            + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
-
-            string numero = "";
-            if (comboBox1.Text == "ECU")
-                numero = num_maniECU;
-            else if (comboBox1.Text == "COL")
-                numero = num_maniCOL;
-            else
-                numero = num_maniPE;
-
-            if (id == "-1")
-            {
-
-            }
-            else
-            {
-
-                string pais_actual = nueva.Quitar_espacios(Convert.ToString(nueva.Consulta("SELECT cartas_de_porte.codigo_pais"
-                + " FROM manifiestos_de_carga INNER JOIN((cartas_de_porte INNER JOIN cartas_final " +
-                "ON cartas_de_porte.llave = cartas_final.id_carta) INNER JOIN manifiestos_final " +
-                "ON cartas_final.llave = manifiestos_final.id_carta_porte) ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto"
-                + " WHERE(([manifiestos_final].[llave] = " + id + "))").Rows[0].ItemArray[0]));
-                if (pais_actual == comboBox1.Text)
-                {
-                    numero = nueva.Quitar_espacios(Convert.ToString(nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
-                    + " FROM manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto"
-                    + " WHERE(([manifiestos_final].[llave] = " + id + "))").Rows[0].ItemArray[0]));
-
-                }
-
-            }
-
             DatosManifiesto datos = new DatosManifiesto();
-            datos.CodigoManifiesto = comboBox1.Text+numero;
+            datos.CodigoManifiesto = comboBox1.Text;
             datos.NumeroCodigo = numericUpDown1.Value;
             datos.CertificadoIdoneidad = richTextBox1.Text;
             datos.PermisoPrestacion = richTextBox2.Text;

@@ -278,7 +278,7 @@
                     <Top>0.56473cm</Top>
                     <Left>0cm</Left>
                     <Height>2.32944cm</Height>
-                    <Width>10.01764cm</Width>
+                    <Width>9.8412cm</Width>
                     <ZIndex>1</ZIndex>
                     <Style>
                       <Border>
@@ -303,6 +303,9 @@
                   <LeftBorder>
                     <Style>None</Style>
                   </LeftBorder>
+                  <RightBorder>
+                    <Style>None</Style>
+                  </RightBorder>
                 </Style>
               </Rectangle>
               <Rectangle Name="Rectangle5">
