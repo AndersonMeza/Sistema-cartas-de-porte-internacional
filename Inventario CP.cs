@@ -19,13 +19,54 @@ namespace Documentos
                c17_4, c17_5, c17_6, c17_7,
                c17_8, c17_9, c17_10,
                c17_11, c17_12, c18, c19,
-               c21, c22;
-        
+               c21, c22,dian;
+
+        public string id = "-1";
+        public string id_referencial = "-1";
+
+        string numeroEC = "413";
+        string numeroCOL = "80";
+        string numeroPE = "1";
+
+        private void richTextBox33_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox33_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void richTextBox34_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void richTextBox10_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_Leave(object sender, EventArgs e)
+        {
+            
+        }
+
+        string numero_final_para_enviar_al_manifiesto = "";
+
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             pictureBox1_Click(sender, e);
-            if (!string.IsNullOrEmpty(richTextBox1.Text) && !string.IsNullOrEmpty(richTextBox2.Text) && (comboBox1.Text == "ECU" || comboBox1.Text == "COL" || comboBox1.Text == "PE"))
+            if (!string.IsNullOrEmpty(richTextBox1.Text) && !string.IsNullOrEmpty(richTextBox2.Text) && (comboBox1.Text == "EC" || comboBox1.Text == "CO" || comboBox1.Text == "PE"))
                 Abrir_Manifiestos(comboBox1.Text, numero_final_para_enviar_al_manifiesto);
 
         }
@@ -42,12 +83,13 @@ namespace Documentos
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
+            QuitarVacios();
             DatosCartaPorte datos = new DatosCartaPorte();
 
             Base nueva = new Base();            
             string numero = "";
-            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='ECU' Order By numero_cartaporte asc";
-            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='COL' Order By numero_cartaporte asc";
+            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='EC' Order By numero_cartaporte asc";
+            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='CO' Order By numero_cartaporte asc";
             string busquedaPE = "Select numero_cartaporte from cartas_de_porte where codigo_pais='PE' Order By numero_cartaporte asc";
             if (nueva.Consulta(busquedaEcu).Rows.Count != 0)
             {
@@ -64,9 +106,9 @@ namespace Documentos
             if (id == "-1")
             {
                 
-                if (comboBox1.Text == "ECU")
+                if (comboBox1.Text == "EC")
                     numero = numeroEC;
-                else if (comboBox1.Text == "COL")
+                else if (comboBox1.Text == "CO")
                     numero = numeroCOL;
                 else
                     numero = numeroPE;
@@ -85,8 +127,8 @@ namespace Documentos
 
             string pais = comboBox1.Text;
             
-            //datos.numero = richTextBox33.Text;
-            datos.codigo = comboBox1.Text+numero;
+            datos.numero = richTextBox33.Text+"\nCEC:"+richTextBox34.Text;
+            datos.codigo = "000"+numero + " "+comboBox1.Text;
             datos.nomDirRemitente = richTextBox1.Text;
             datos.nomDirDestinatario= richTextBox2.Text;
             datos.nomDirConsignatario = richTextBox3.Text;
@@ -118,26 +160,39 @@ namespace Documentos
             datos.DocumentosRecibidos = richTextBox29.Text;
             datos.LugarEmision = richTextBox30.Text;
             datos.InstruccionesTransportista = richTextBox31.Text;
-            datos.ObservacionesTransportista = richTextBox28.Text;
+            datos.ObservacionesTransportista = richTextBox28.Text;            
+            decimal sumar = Convert.ToDecimal(datos.GastosValorFlete)+ Convert.ToDecimal(datos.GastosValorSeguro)+ Convert.ToDecimal(datos.GastosValorOtros);            
+            datos.SumaRemitente = sumar.ToString();
+            double sumard = Convert.ToDouble(datos.GastosCargoDestinatarioFlete) + Convert.ToDouble(datos.GastosCargoDestinatarioSeguro) + Convert.ToDouble(datos.GastosCargoDestinatarioOtros);
+            datos.SumaDestinatario = sumard+"";            
+
             Form2 frm2 = new Form2();
             frm2.datos.Add(datos);
             frm2.Show();
+
+            VolverVacios();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (id == "-1")
+            {
+                string pais = comboBox1.Text;
+                Base nueva = new Base();
+                try
+                {
+                    string numerooo = (Convert.ToInt32(nueva.Consulta("Select numero_cartaporte FROM cartas_de_porte where codigo_pais='" + pais + "' order by numero_cartaporte desc").Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                    label34.Text = "NUEVA CARTA DE PORTE " + numerooo;
+                }
+                catch (Exception tryyu)
+                {
+                    label34.Text = "NUEVA CARTA DE PORTE ";
+                }
+            }
+              
         }
 
-        public string id = "-1";
-        public string id_referencial = "-1";
-
-
-
-        string numeroEC = "1";
-        string numeroCOL = "1";
-        string numeroPE = "1";
-        string numero_final_para_enviar_al_manifiesto = "";
+        
 
         private void groupBox4_Enter(object sender, EventArgs e)
         {
@@ -161,8 +216,8 @@ namespace Documentos
         {
             Base nueva = new Base();
             string numero = "";
-            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='ECU' Order By numero_cartaporte asc";
-            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='COL' Order By numero_cartaporte asc";
+            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='EC' Order By numero_cartaporte asc";
+            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='CO' Order By numero_cartaporte asc";
             string busquedaPE = "Select numero_cartaporte from cartas_de_porte where codigo_pais='PE' Order By numero_cartaporte asc";
             if (nueva.Consulta(busquedaEcu).Rows.Count != 0)
             {
@@ -179,7 +234,7 @@ namespace Documentos
             if (id == "-1")
             {
 
-                if (comboBox1.Text == "ECU")
+                if (comboBox1.Text == "EC")
                     numero = numeroEC;
                 else if (comboBox1.Text == "COL")
                     numero = numeroCOL;
@@ -199,34 +254,153 @@ namespace Documentos
             }            
 
 
-            Form1 principal = Application.OpenForms.OfType<Form1>().SingleOrDefault();
-            //Contenedor_controles principal = (Contenedor_controles)this;
-
-            if (principal.panel2.Controls.Count > 0)
-            {
-                principal.panel2.Controls.RemoveAt(0);
-            }
+            
 
             Documento2 actual = new Documento2();
             //actual.id = id;
             //actual.id_referencia = refe;
+            
+            string aduanaCruce = "";
+            string aduanaDestino = "";
 
+            if(comboBox1.Text=="EC")
+            {
+                aduanaCruce = "TULCAN    ECUADOR";
+                aduanaDestino = "IPIALES    COLOMBIA";
+            }
+            else if (comboBox1.Text == "CO")
+            {
+                aduanaCruce = "IPIALES    COLOMBIA";
+                aduanaDestino = "TULCAN    ECUADOR";
+            }
+            else if(comboBox1.Text=="PE")
+            {
+                aduanaCruce = "HUAQUILLAS    ECUADOR";
+                aduanaDestino = "AGUASU    PERU";
+            }
+
+            List<string> sobrepasa = new List<string>();
+            
+            actual.richTextBox38.Text = aduanaCruce;
+            actual.richTextBox37.Text = aduanaDestino;
             actual.numericUpDown1.Value = Convert.ToInt32(num);
             actual.comboBox1.Text = pais;
-            actual.richTextBox22.Text = pais + numero;
-            actual.richTextBox27.Text = this.richTextBox5.Text;
-            actual.richTextBox26.Text = this.richTextBox6.Text;
-            actual.richTextBox21.Text = this.richTextBox12.Text;
-            actual.richTextBox20.Text = this.richTextBox7.Text;
-            actual.richTextBox19.Text = this.richTextBox10.Text;
-            actual.richTextBox18.Text = this.richTextBox32.Text;
-            actual.richTextBox17.Text = this.richTextBox8.Text;
+            actual.richTextBox22.Text = "000"+numero+" "+pais;
+            string n27 = "";
+            try
+            {
+                n27=this.richTextBox6.Text.Split(',')[0];
+                if (n27[0] == '\n')
+                    n27 = n27.Substring(1);
+            }catch(Exception sghhg) { }
+            
+            
+            if (seAcepta(actual.richTextBox27, n27))
+                actual.richTextBox27.Text = n27;
+            else
+                sobrepasa.Add("[7]");
 
-            actual.TopLevel = false;
-            actual.Dock = DockStyle.Fill;
-            principal.panel2.Controls.Add(actual);
-            principal.Tag = actual;
-            actual.Show();
+
+            if (seAcepta(actual.richTextBox26, this.richTextBox11.Text))
+                actual.richTextBox26.Text = this.richTextBox11.Text;
+            else
+                sobrepasa.Add("[8]");
+
+            if (seAcepta(actual.richTextBox21, this.richTextBox12.Text))
+                actual.richTextBox21.Text = this.richTextBox12.Text;
+            else
+                sobrepasa.Add("[12]");
+
+            if (seAcepta(actual.richTextBox20, this.richTextBox7.Text.Split('\n')[0]))
+                actual.richTextBox20.Text = this.richTextBox7.Text.Split('\n')[0];
+            else
+                sobrepasa.Add("[10]");
+            
+            try
+            {
+                if (seAcepta(actual.richTextBox19, this.richTextBox7.Text.Split('\n')[1]))
+                    actual.richTextBox19.Text = this.richTextBox7.Text.Split('\n')[1];
+                else
+                    sobrepasa.Add("[10]");
+                
+            }
+            catch (Exception e)
+            {
+                actual.richTextBox19.Text = "";
+            }
+
+            if (seAcepta(actual.richTextBox18, this.richTextBox32.Text))
+                actual.richTextBox18.Text = this.richTextBox32.Text;
+            else
+                sobrepasa.Add("[13.1]");
+
+            if (seAcepta(actual.richTextBox17, this.richTextBox8.Text))
+                actual.richTextBox17.Text = this.richTextBox8.Text;
+            else
+                sobrepasa.Add("[13.2]");
+
+            if (seAcepta(actual.richTextBox36, this.richTextBox30.Text))
+                actual.richTextBox36.Text = this.richTextBox30.Text;
+            else
+                sobrepasa.Add("[19]");
+
+            if (seAcepta(actual.richTextBox39, this.richTextBox9.Text.Replace("\n",",")))
+                actual.richTextBox39.Text = this.richTextBox9.Text.Replace("\n", " ");
+            else
+                sobrepasa.Add("[16]");  
+            
+            if(sobrepasa.Count==0)
+            {
+                Form1 principal = Application.OpenForms.OfType<Form1>().SingleOrDefault();
+                //Contenedor_controles principal = (Contenedor_controles)this;
+
+                if (principal.panel2.Controls.Count > 0)
+                {
+                    principal.panel2.Controls.RemoveAt(0);
+                }
+                actual.TopLevel = false;
+                actual.Dock = DockStyle.Fill;
+                principal.panel2.Controls.Add(actual);
+                principal.Tag = actual;
+                actual.Show();
+            }
+            else
+            {
+                DialogResult respuesta = new DialogResult();
+                string textmani = "";
+                for(int i =0;i<sobrepasa.Count;i++)
+                {
+                    textmani += sobrepasa[i];
+                }
+                respuesta = MessageBox.Show("Los siguientes campos son muy grandes para los campos del manifiesto:"+textmani+"\n ¿Desea continuar sin cargar estos campos?", "Abrir Nuevo Manifiesto ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (respuesta.ToString() == "Yes")
+                {
+                    Form1 principal = Application.OpenForms.OfType<Form1>().SingleOrDefault();
+                    //Contenedor_controles principal = (Contenedor_controles)this;
+
+                    if (principal.panel2.Controls.Count > 0)
+                    {
+                        principal.panel2.Controls.RemoveAt(0);
+                    }
+                    actual.TopLevel = false;
+                    actual.Dock = DockStyle.Fill;
+                    principal.panel2.Controls.Add(actual);
+                    principal.Tag = actual;
+                    actual.Show();
+                }
+            }
+            
+        }
+
+        public bool seAcepta(RichTextBox rich, string texto)
+        {
+            bool f = true;
+
+            if (rich.MaxLength < texto.Length)
+            {
+                f= false;
+            }
+            return f;
         }
 
         private void richTextBox21_KeyPress(object sender, KeyPressEventArgs e)
@@ -331,26 +505,12 @@ namespace Documentos
 
         private void richTextBox8_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '.' && richTextBox8.Text.Contains("."))
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                Validar.NumerosYPuntoSinEspacio(e);
-            }
+
         }
 
         private void richTextBox32_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar=='.' && richTextBox32.Text.Contains("."))
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                Validar.NumerosYPuntoSinEspacio(e);
-            }
+           
             
         }
 
@@ -369,8 +529,7 @@ namespace Documentos
             }
             var source1 = new AutoCompleteStringCollection();
             source1.AddRange(arreglo);
-            richTextBox1.AutoCompleteCustomSource = source1;
-            richTextBox2.AutoCompleteCustomSource = source1;
+
         }
 
         private void QuitarVacios()
@@ -467,27 +626,27 @@ namespace Documentos
                 c14 = "";
             c15 = richTextBox14.Text;
             c16 = richTextBox9.Text.ToUpper();
-            c17_1 = richTextBox16.Text.Replace("\n", "");
+            c17_1 = richTextBox16.Text.Replace("\n", "").Replace('.', ',');
             if (c17_1 == ".")
                 c17_1 = "";
             c17_2 = richTextBox21.Text.ToUpper();
-            c17_3 = richTextBox24.Text.Replace("\n", "");
+            c17_3 = richTextBox24.Text.Replace("\n", "").Replace('.', ',');
             if (c17_3 == ".")
                 c17_3 = "";
             c17_4 = richTextBox27.Text.ToUpper();
-            c17_5 = richTextBox17.Text.Replace("\n", "");
+            c17_5 = richTextBox17.Text.Replace("\n", "").Replace('.',',');
             if (c17_5 == ".")
                 c17_5 = "";
             c17_6 = richTextBox20.Text.ToUpper();
-            c17_7 = richTextBox23.Text.Replace("\n", "");
+            c17_7 = richTextBox23.Text.Replace("\n", "").Replace('.', ',');
             if (c17_7 == ".")
                 c17_7 = "";
             c17_8 = richTextBox26.Text.ToUpper();
-            c17_9 = richTextBox18.Text.Replace("\n", "");
+            c17_9 = richTextBox18.Text.Replace("\n", "").Replace('.', ',');
             if (c17_9 == ".")
                 c17_9 = "";
             c17_10 = richTextBox19.Text.ToUpper();
-            c17_11 = richTextBox22.Text.Replace("\n", "");
+            c17_11 = richTextBox22.Text.Replace("\n", "").Replace('.', ',');
             if (c17_11 == ".")
                 c17_11 = "";
             c17_12 = richTextBox25.Text.ToUpper();
@@ -495,6 +654,7 @@ namespace Documentos
             c19 = richTextBox30.Text.ToUpper();
             c21 = richTextBox31.Text.ToUpper();
             c22 = richTextBox28.Text.ToUpper();
+            dian = richTextBox33.Text+"\n"+richTextBox34.Text;
 
             VolverVacios();
         }
@@ -528,6 +688,16 @@ namespace Documentos
                 if (id != "-1")
                 {
                     label34.Text = "EDITANDO " + pais + " " + nu;
+                }
+                else
+                {
+                    try
+                    {
+                        string numerooo = (Convert.ToInt32(nueva.Consulta("Select numero_cartaporte FROM cartas_de_porte where codigo_pais='" + pais + "' order by numero_cartaporte desc").Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                        label34.Text = "NUEVA CARTA DE PORTE " + numerooo;
+                    }
+                    catch (Exception tryyu) { }
+                    
                 }
 
                 comboBox1.Text = pais;
@@ -563,22 +733,24 @@ namespace Documentos
                 richTextBox15.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[4].ToString());
                 richTextBox14.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[5].ToString());
                 richTextBox9.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[6].ToString());
-                richTextBox16.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[7].ToString());
+                richTextBox16.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[7].ToString()).Replace(',', '.');
                 richTextBox21.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[8].ToString());
-                richTextBox24.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[9].ToString());
+                richTextBox24.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[9].ToString()).Replace(',', '.');
                 richTextBox27.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[10].ToString());
-                richTextBox17.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[11].ToString());
+                richTextBox17.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[11].ToString()).Replace(',', '.');
                 richTextBox20.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[12].ToString());
-                richTextBox23.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[13].ToString());
+                richTextBox23.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[13].ToString()).Replace(',', '.');
                 richTextBox26.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[14].ToString());
-                richTextBox18.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[15].ToString());
+                richTextBox18.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[15].ToString()).Replace(',', '.');
                 richTextBox19.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[16].ToString());
-                richTextBox22.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[17].ToString());
+                richTextBox22.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[17].ToString()).Replace(',', '.');
                 richTextBox25.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[18].ToString());
                 richTextBox29.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[19].ToString());
                 richTextBox30.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[20].ToString());
                 richTextBox31.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[21].ToString());
                 richTextBox28.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[22].ToString());
+                try { richTextBox33.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[23].ToString().Split('\n')[0]); } catch (Exception cc) { }
+                try { richTextBox34.Text = nueva.Quitar_espacios(consulta_carta_final.Rows[0].ItemArray[23].ToString().Split('\n')[1]); }catch(Exception dfd) { }
 
                 //richTextBox2.Text = nueva.Quitar_espacios(nueva.Consulta("").Rows[0].ItemArray[0].ToString());
             }
@@ -597,8 +769,8 @@ namespace Documentos
             Base nueva = new Base();
             refrescar_valores();
             
-            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='ECU' Order By numero_cartaporte asc";
-            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='COL' Order By numero_cartaporte asc";
+            string busquedaEcu = "Select numero_cartaporte from cartas_de_porte where codigo_pais='EC' Order By numero_cartaporte asc";
+            string busquedaCOL = "Select numero_cartaporte from cartas_de_porte where codigo_pais='CO' Order By numero_cartaporte asc";
             string busquedaPE = "Select numero_cartaporte from cartas_de_porte where codigo_pais='PE' Order By numero_cartaporte asc";
 
             if(nueva.Consulta(busquedaEcu).Rows.Count!=0)
@@ -617,7 +789,7 @@ namespace Documentos
             }
 
 
-            if (!string.IsNullOrEmpty(richTextBox1.Text) && !string.IsNullOrEmpty(richTextBox2.Text) && (comboBox1.Text=="ECU" || comboBox1.Text == "COL" || comboBox1.Text == "PE"))
+            if (!string.IsNullOrEmpty(richTextBox1.Text) && !string.IsNullOrEmpty(richTextBox2.Text) && (comboBox1.Text=="EC" || comboBox1.Text == "CO" || comboBox1.Text == "PE"))
             {
                 if (!nueva.Dato_en_consulta(nueva.Quitar_espacios(c2), "Select c2yc3 from Organizaciones_y_direcciones"))
                 {
@@ -638,9 +810,9 @@ namespace Documentos
                 if (id == "-1")
                 {
                     string numero = "";
-                    if (comboBox1.Text == "ECU")
+                    if (comboBox1.Text == "EC")
                         numero = numeroEC;
-                    else if (comboBox1.Text == "COL")
+                    else if (comboBox1.Text == "CO")
                         numero = numeroCOL;
                     else
                         numero = numeroPE;
@@ -655,9 +827,9 @@ namespace Documentos
                 {
                     string codigo_pais = comboBox1.Text;
                     string numero = "";                    
-                    if (comboBox1.Text == "ECU")
+                    if (comboBox1.Text == "EC")
                         numero = numeroEC;
-                    else if (comboBox1.Text == "COL")
+                    else if (comboBox1.Text == "CO")
                         numero = numeroCOL;
                     else
                         numero = numeroPE;
@@ -705,10 +877,10 @@ namespace Documentos
 
                 if (id == "-1")
                 {
-                    string comando6 = "INSERT INTO cartas_final (id_carta, c13_1,c13_2,c14,c15,c16,c17_1,c17_2,c17_3,c17_4,c17_5,c17_6,c17_7,c17_8,c17_9,c17_10,c17_11,c17_12,c18,c19,c21,c22) " +
+                    string comando6 = "INSERT INTO cartas_final (id_carta, c13_1,c13_2,c14,c15,c16,c17_1,c17_2,c17_3,c17_4,c17_5,c17_6,c17_7,c17_8,c17_9,c17_10,c17_11,c17_12,c18,c19,c21,c22,dian) " +
                     " VALUES('" + cartas.Rows[cartas.Rows.Count - 1].ItemArray[0] + "','" + c13_1 + "','" + c13_2 + "','" +
                     c14 + "','" + c15 + "','" + c16 + "','" + c17_1 + "','" + c17_2 + "','" + c17_3 + "','" + c17_4 + "','" + c17_5 + "','" + c17_6 + "','" +
-                    c17_7 + "','" + c17_8 + "','" + c17_9 + "','" + c17_10 + "','" + c17_11 + "','" + c17_12 + "','" + c18 + "','" + c19 + "','" + c21 + "','" + c22 + "')";
+                    c17_7 + "','" + c17_8 + "','" + c17_9 + "','" + c17_10 + "','" + c17_11 + "','" + c17_12 + "','" + c18 + "','" + c19 + "','" + c21 + "','" + c22 + "','"+dian+"')";
                     nueva.comando(comando6);
 
                     id = cartas.Rows[cartas.Rows.Count - 1].ItemArray[0].ToString();
@@ -716,12 +888,13 @@ namespace Documentos
                 }
                 else
                 {
-                    string comando6 = "UPDATE cartas_final SET c13_1='" + c13_1 + "',c13_2='" + c13_2 + "',c14='" + c14 + "'," +
+                    string comando6 = "UPDATE cartas_final SET c13_1='" + c13_1 + "',dian='" + dian + "',c13_2='" + c13_2 + "',c14='" + c14 + "'," +
                         "c15='" + c15 + "',c16='" + c16 + "',c17_1='" + c17_1 + "',c17_2='" + c17_2 + "',c17_3='" + c17_3 + "',c17_4='" + c17_4 + "'," +
                         "c17_5='" + c17_5 + "',c17_6='" + c17_6 + "',c17_7='" + c17_7 + "',c17_8='" + c17_8 + "',c17_9='" + c17_9 + "',c17_10='" + c17_10 + "'" +
-                        ",c17_11='" + c17_11 + "',c17_12='" + c17_12 + "',c18='" + c18 + "',c19='" + c19 + "',c21='" + c21 + "',c22='" + c22 + "'" +
+                        ",c17_11='" + c17_11 + "',c17_12='" + c17_12 + "',c18='" + c18 + "',c19='" + c19 + "',c21='" + c21 + "',c22='" + c22 + "'" + 
                         "WHERE llave=" + id ;
                     nueva.comando(comando6);
+                    
                 }
                 MessageBox.Show("Se ha guardado exitosamente");
             }

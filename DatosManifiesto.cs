@@ -50,6 +50,6 @@ namespace Documentos
         public string PrecioMercancias { get; set; }
         public string AduanaCruceFrontera { get; set; }
         public string AduanaDestino { get; set; }
-        public string FechaEmision { get; set; }
+        public string FechaEmision { get; set; }        
     }
 }

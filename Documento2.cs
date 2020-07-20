@@ -19,10 +19,11 @@ namespace Documentos
     {
         public string id = "-1";
         public string id_referencia = "-1";
-        string num_maniECU = "1";
-        string num_maniCOL = "1";
+        string num_maniECU = "849";
+        string num_maniCOL = "117";
         string num_maniPE = "1";
         bool existe_carta = false;
+        
 
         string c2, c3, c4, c5, c6, c7, c8,
                c9, c10, c11, c12, c13,
@@ -53,7 +54,7 @@ namespace Documentos
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             pictureBox1_Click(sender, e);
-            if (!string.IsNullOrEmpty(richTextBox8.Text) && !string.IsNullOrEmpty(richTextBox13.Text) && !string.IsNullOrEmpty(richTextBox15.Text) && !string.IsNullOrEmpty(richTextBox31.Text) && (comboBox1.Text == "ECU" || comboBox1.Text == "COL" || comboBox1.Text == "PE") && existe_carta)
+            if (!string.IsNullOrEmpty(richTextBox8.Text) && !string.IsNullOrEmpty(richTextBox13.Text) && !string.IsNullOrEmpty(richTextBox15.Text) && !string.IsNullOrEmpty(richTextBox31.Text) && (comboBox1.Text == "EC" || comboBox1.Text == "CO" || comboBox1.Text == "PE") && existe_carta)
                 Abrir_Manifiestos(comboBox1.Text, numericUpDown1.Value.ToString());
 
         }
@@ -86,6 +87,7 @@ namespace Documentos
             actual.richTextBox19.Text = this.richTextBox19.Text;
             actual.richTextBox20.Text = this.richTextBox20.Text;
             actual.richTextBox21.Text = this.richTextBox21.Text;
+            actual.richTextBox36.Text = this.richTextBox36.Text;
 
 
 
@@ -103,25 +105,62 @@ namespace Documentos
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
- Base nueva = new Base();
+            Base nueva = new Base();
 
             DataTable consulta_numECU = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'ECU'))"
+            + " WHERE(([cartas_de_porte].[codigo_pais] = 'EC'))"
             + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
             DataTable consulta_numCOL = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'COL'))"
+            + " WHERE(([cartas_de_porte].[codigo_pais] = 'CO'))"
             + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
             DataTable consulta_numPE = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
             + " WHERE(([cartas_de_porte].[codigo_pais] = 'PE'))"
             + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
 
+            string empresaEmisor = "";string empresaReceptor = "";string campoDian = "";string campoDae = ""; string campoBodega = "";
+
+            empresaEmisor = nueva.Quitar_espacios(nueva.Consulta("SELECT Organizaciones_y_direcciones.c2yc3"+
+            " FROM Organizaciones_y_direcciones INNER JOIN(cartas_de_porte INNER JOIN Organizaciones_en_cartaportes ON cartas_de_porte.llave = Organizaciones_en_cartaportes.id_carta) ON Organizaciones_y_direcciones.id_organizacion = Organizaciones_en_cartaportes.id_organizacion"+
+            " WHERE(([cartas_de_porte].[codigo_pais] = '"+comboBox1.Text+"') AND([cartas_de_porte].[numero_cartaporte] = "+numericUpDown1.Value.ToString()+") AND([Organizaciones_en_cartaportes].[papel_organizacion] = 'EMISOR'))").Rows[0].ItemArray[0].ToString()).Split('\n')[0];
+
+            empresaReceptor = nueva.Quitar_espacios(nueva.Consulta("SELECT Organizaciones_y_direcciones.c2yc3" +
+            " FROM Organizaciones_y_direcciones INNER JOIN(cartas_de_porte INNER JOIN Organizaciones_en_cartaportes ON cartas_de_porte.llave = Organizaciones_en_cartaportes.id_carta) ON Organizaciones_y_direcciones.id_organizacion = Organizaciones_en_cartaportes.id_organizacion" +
+            " WHERE(([cartas_de_porte].[codigo_pais] = '" + comboBox1.Text + "') AND([cartas_de_porte].[numero_cartaporte] = " + numericUpDown1.Value.ToString() + ") AND([Organizaciones_en_cartaportes].[papel_organizacion] = 'RECEPTOR'))").Rows[0].ItemArray[0].ToString()).Split('\n')[0];
+
+            try
+            {
+
+                campoDian = nueva.Quitar_espacios(nueva.Consulta("SELECT cartas_final.dian" +
+                " FROM cartas_de_porte INNER JOIN cartas_final ON cartas_de_porte.llave = cartas_final.id_carta" +
+                " WHERE(([cartas_de_porte].[codigo_pais] = '" + comboBox1.Text + "') AND([cartas_de_porte].[numero_cartaporte] = " + numericUpDown1.Value.ToString() + ")) ").Rows[0].ItemArray[0].ToString().Split('\n')[0]);
+            }
+            catch (Exception hjkjhkj)
+            {
+
+            }
+
+            try
+            {
+                campoDae = nueva.Quitar_espacios(nueva.Consulta("SELECT cartas_final.c18" +
+            " FROM cartas_de_porte INNER JOIN cartas_final ON cartas_de_porte.llave = cartas_final.id_carta" +
+            " WHERE(([cartas_de_porte].[codigo_pais] = '" + comboBox1.Text + "') AND([cartas_de_porte].[numero_cartaporte] = " + numericUpDown1.Value.ToString() + "))").Rows[0].ItemArray[0].ToString()).Split('\n')[1];
+            }
+            catch(Exception esss)
+            {
+
+            }
+            
+            campoBodega = nueva.Quitar_espacios(nueva.Consulta("SELECT cartas_final.c21" +
+            " FROM cartas_de_porte INNER JOIN cartas_final ON cartas_de_porte.llave = cartas_final.id_carta" +
+            " WHERE(([cartas_de_porte].[codigo_pais] = '" + comboBox1.Text + "') AND([cartas_de_porte].[numero_cartaporte] = " + numericUpDown1.Value.ToString() + "))").Rows[0].ItemArray[0].ToString()).Split('\n')[0];
+
             string numero = "";
-            if (comboBox1.Text == "ECU")
+            if (comboBox1.Text == "EC")
                 numero = num_maniECU;
-            else if (comboBox1.Text == "COL")
+            else if (comboBox1.Text == "CO")
                 numero = num_maniCOL;
             else
                 numero = num_maniPE;
@@ -148,8 +187,12 @@ namespace Documentos
 
             }
 
-            DatosManifiesto datos = new DatosManifiesto();
-            datos.CodigoManifiesto = comboBox1.Text+numero;
+
+
+
+
+            DatosManifiesto datos = new DatosManifiesto();            
+            datos.CodigoManifiesto = "000"+numero+" "+comboBox1.Text;
             datos.NumeroCodigo = numericUpDown1.Value;
             datos.CertificadoIdoneidad = richTextBox1.Text;
             datos.PermisoPrestacion = richTextBox2.Text;
@@ -157,7 +200,7 @@ namespace Documentos
             datos.PlacaVehiculo = richTextBox8.Text;
             datos.AnioFabricacionVehiculo = richTextBox4.Text;
             datos.ChasisVehiculo = richTextBox7.Text;
-            datos.CertificadosHabilitacion = richTextBox6.Text;
+            datos.CertificadosHabilitacion = richTextBox6.Text.Replace("\n"," ");
             datos.PlacaUnidadCarga = richTextBox15.Text;
             datos.MarcaUnidadCarga = richTextBox5.Text;
             datos.AnioFabricacionUnidadCarga = richTextBox16.Text;
@@ -179,10 +222,11 @@ namespace Documentos
             datos.CPerecible= radioButton4.Checked;
             datos.DOtra= radioButton3.Checked;
             datos.DOtraTexto = textBox1.Text;
-            datos.NumeroIdentificacionContenedores = richTextBox24.Text;
+            datos.NumeroIdentificacionContenedores = richTextBox24.Text.Replace("\n", " ");
             datos.NroCartaPorte = richTextBox22.Text;
-            datos.DescripcionMercancias = richTextBox21.Text;
-            datos.NumeroPrecintosAduaneros = richTextBox23.Text;
+            datos.DescripcionMercancias = saltotext(richTextBox21.Text)+"REMITENTE:"+empresaEmisor+"\nDESTINATARIO:"+empresaReceptor+"\nDIAN:"+campoDian+"\n"+campoDae+"\nBODEGA:"+campoBodega;
+            Console.WriteLine(datos.DescripcionMercancias.Split('\r')[0]);
+            datos.NumeroPrecintosAduaneros = richTextBox23.Text.Replace("\n", " ");
             datos.CantidadBultos = richTextBox20.Text;
             datos.ClaseMarcaBultos = richTextBox19.Text;
             datos.PesoBruto = richTextBox18.Text;
@@ -195,6 +239,59 @@ namespace Documentos
             Form3 frm3 = new Form3();
             frm3.datos.Add(datos);
             frm3.Show();
+        }
+
+        public string saltotext(string text)
+        {
+            string t = text;
+            int numlines = (text.Length/52)+1;
+            int ns = contar(text);
+            int espacios = 15 - numlines - ns-8;
+            
+            for(int i=1;i<=espacios;i++)
+            {
+                t += "\n";
+            }
+            return t;
+        }
+
+        public int contar(string t)
+        {
+            int con = 0;
+            for(int i=0;i<t.Length-1;i++)
+            {
+                if (t[i] == '\n')
+                {
+                    con += 1;
+                }
+                    
+            }
+            return con;
+        }
+        private void richTextBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(id == "-1")
+            {
+                string pais = comboBox1.Text;
+                Base nueva = new Base();
+                try
+                {
+                    string numerooo = (Convert.ToInt32(nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais " +
+                    " FROM manifiestos_de_carga INNER JOIN((cartas_de_porte INNER JOIN cartas_final ON cartas_de_porte.llave = cartas_final.id_carta) INNER JOIN manifiestos_final ON cartas_final.llave = manifiestos_final.id_carta_porte) ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto " +
+                    " WHERE(([cartas_de_porte].[codigo_pais] = '" + pais + "')) order by manifiestos_de_carga.numero_manifiesto_pais desc").Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                    label34.Text = "NUEVO MANIFIESTO " + numerooo;
+                }
+                catch (Exception tryyu)
+                {
+                    label34.Text = "NUEVO MANIFIESTO ";
+                }
+            }
+            
         }
 
         private void richTextBox32_Leave(object sender, EventArgs e)
@@ -295,27 +392,13 @@ namespace Documentos
 
         private void richTextBox17_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar=='.' && richTextBox17.Text.Contains("."))
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                Validar.NumerosYPunto(e);
-            }
+
             
         }
 
         private void richTextBox18_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '.' && richTextBox18.Text.Contains("."))
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                Validar.NumerosYPunto(e);
-            }
+ 
         }
 
         private void richTextBox31_KeyPress(object sender, KeyPressEventArgs e)
@@ -500,10 +583,10 @@ namespace Documentos
             c16 = richTextBox10.Text;
             c17 = richTextBox9.Text;
             c18 = richTextBox31.Text.ToUpper();
-            c19 = richTextBox32.Text;
+            c19 = richTextBox32.Text.Replace("X","0");
             c20 = richTextBox30.Text.ToUpper();
-            c21 = richTextBox29.Text;
-            c22 = richTextBox28.Text;
+            c21 = richTextBox29.Text.Replace("X", "0");
+            c22 = richTextBox28.Text.Replace("X", "0");
             c23 = richTextBox27.Text.ToUpper();
             c24 = richTextBox26.Text.ToUpper();
             if (radioButton1.Checked)
@@ -611,6 +694,20 @@ namespace Documentos
                 {
                     label34.Text = "EDITANDO MANIFIESTO " + num_m + " DE CARTA PORTE " + pais + " " + num_c;
                 }
+                else
+                {
+                    try
+                    {
+                        string numerooo = (Convert.ToInt32(nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais "+
+                        " FROM manifiestos_de_carga INNER JOIN((cartas_de_porte INNER JOIN cartas_final ON cartas_de_porte.llave = cartas_final.id_carta) INNER JOIN manifiestos_final ON cartas_final.llave = manifiestos_final.id_carta_porte) ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto "+
+                        " WHERE(([cartas_de_porte].[codigo_pais] = '"+pais+ "')) order by manifiestos_de_carga.numero_manifiesto_pais desc").Rows[0].ItemArray[0].ToString()) + 1).ToString();
+                        label34.Text = "NUEVA MANIFIESTO " + numerooo;
+                    }
+                    catch (Exception tryyu)
+                    {
+                        label34.Text = "NUEVO MANIFIESTO ";
+                    }
+                }
 
                 comboBox1.Text = pais;
                 numericUpDown1.Value = Convert.ToInt32(num_c);
@@ -664,13 +761,20 @@ namespace Documentos
                 DataTable c_conductor_a = nueva.Consulta("SELECT Conductores.*" +
                 " FROM Conductores INNER JOIN((manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) INNER JOIN Conductores_en_manifiesto ON manifiestos_de_carga.llave = Conductores_en_manifiesto.id_manifiestos) ON Conductores.c13 = Conductores_en_manifiesto.id_conductor" +
                 " WHERE(([manifiestos_final].[llave] = " + id_ref + ") AND([Conductores_en_manifiesto].[tipo_conductor] = 'AYUDANTE'))");
-                richTextBox32.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[0].ToString());
+                richTextBox32.Text = "XXXXXXXXXX";
+                richTextBox29.Text = "XXXXXXXXXX";
+                richTextBox28.Text = "XXXXXXXXXX";
+                if (Convert.ToInt32(nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[0].ToString())) != 0)
+                    richTextBox32.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[0].ToString());
+
+                if (Convert.ToInt32(nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[3].ToString()))!=0)
+                    richTextBox29.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[3].ToString());
+
+                if(Convert.ToInt32(nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[4].ToString()))!=0)
+                    richTextBox28.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[4].ToString());
+
                 richTextBox31.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[1].ToString());
-                richTextBox30.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[2].ToString());
-                richTextBox29.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[3].ToString());
-                richTextBox28.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[4].ToString());
-
-
+                richTextBox30.Text = nueva.Quitar_espacios(c_conductor_a.Rows[0].ItemArray[2].ToString());                                
 
                 ////////////////////////////////
                 ///RESTO MANIFIESTO
@@ -740,11 +844,11 @@ namespace Documentos
             
             DataTable consulta_numECU = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'ECU'))"
+            + " WHERE(([cartas_de_porte].[codigo_pais] = 'EC'))"
             + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC") ;
             DataTable consulta_numCOL = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
-            + " WHERE(([cartas_de_porte].[codigo_pais] = 'COL'))"
+            + " WHERE(([cartas_de_porte].[codigo_pais] = 'CO'))"
             + " ORDER BY manifiestos_de_carga.numero_manifiesto_pais ASC");
             DataTable consulta_numPE = nueva.Consulta("SELECT manifiestos_de_carga.numero_manifiesto_pais"
             + " FROM cartas_de_porte INNER JOIN(cartas_final INNER JOIN(manifiestos_de_carga INNER JOIN manifiestos_final ON manifiestos_de_carga.llave = manifiestos_final.id_manifiesto) ON cartas_final.llave = manifiestos_final.id_carta_porte) ON cartas_de_porte.llave = cartas_final.id_carta"
@@ -767,7 +871,7 @@ namespace Documentos
             }
 
 
-            if (!string.IsNullOrEmpty(richTextBox8.Text) && !string.IsNullOrEmpty(richTextBox13.Text) && !string.IsNullOrEmpty(richTextBox15.Text) && !string.IsNullOrEmpty(richTextBox31.Text) && (comboBox1.Text == "ECU" || comboBox1.Text == "COL" || comboBox1.Text == "PE") && existe_carta)
+            if (!string.IsNullOrEmpty(richTextBox8.Text) && !string.IsNullOrEmpty(richTextBox13.Text) && !string.IsNullOrEmpty(richTextBox15.Text) && !string.IsNullOrEmpty(richTextBox31.Text) && (comboBox1.Text == "EC" || comboBox1.Text == "CO" || comboBox1.Text == "PE") && existe_carta)
             {
 
                 if (!nueva.Dato_en_consulta(nueva.Quitar_espacios(c13), "Select c13 from Conductores"))
@@ -823,9 +927,9 @@ namespace Documentos
                 if (id == "-1")
                 {
                     string numero = "";
-                    if (comboBox1.Text == "ECU")
+                    if (comboBox1.Text == "EC")
                         numero = num_maniECU;
-                    else if (comboBox1.Text == "COL")
+                    else if (comboBox1.Text == "CO")
                         numero = num_maniCOL;
                     else
                         numero = num_maniPE;

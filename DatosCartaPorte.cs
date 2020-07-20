@@ -41,6 +41,9 @@ namespace Documentos
         public string DocumentosRecibidos { get; set; }
         public string LugarEmision { get; set; }
         public string InstruccionesTransportista { get; set; }
-        public string ObservacionesTransportista { get; set; }
+        public string ObservacionesTransportista { get; set; }        
+        public string SumaRemitente { get; set; }
+        public string SumaDestinatario { get; set; }
+        public string Dian { get; set; }
     }
 }

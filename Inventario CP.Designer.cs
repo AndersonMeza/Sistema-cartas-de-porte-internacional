@@ -42,6 +42,10 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.richTextBox34 = new System.Windows.Forms.RichTextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.richTextBox33 = new System.Windows.Forms.RichTextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.richTextBox31 = new System.Windows.Forms.RichTextBox();
             this.richTextBox30 = new System.Windows.Forms.RichTextBox();
             this.richTextBox28 = new System.Windows.Forms.RichTextBox();
@@ -51,6 +55,8 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.richTextBox25 = new System.Windows.Forms.RichTextBox();
             this.richTextBox26 = new System.Windows.Forms.RichTextBox();
             this.richTextBox27 = new System.Windows.Forms.RichTextBox();
@@ -63,21 +69,14 @@
             this.richTextBox18 = new System.Windows.Forms.RichTextBox();
             this.richTextBox17 = new System.Windows.Forms.RichTextBox();
             this.richTextBox16 = new System.Windows.Forms.RichTextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.richTextBox2 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.TextBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox8 = new System.Windows.Forms.RichTextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.richTextBox32 = new System.Windows.Forms.RichTextBox();
@@ -245,8 +244,8 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "COL",
-            "ECU",
+            "CO",
+            "EC",
             "PE"});
             this.comboBox1.Location = new System.Drawing.Point(19, 21);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -254,9 +253,14 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.Leave += new System.EventHandler(this.comboBox1_Leave);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.richTextBox34);
+            this.groupBox3.Controls.Add(this.label28);
+            this.groupBox3.Controls.Add(this.richTextBox33);
+            this.groupBox3.Controls.Add(this.label22);
             this.groupBox3.Controls.Add(this.richTextBox31);
             this.groupBox3.Controls.Add(this.richTextBox30);
             this.groupBox3.Controls.Add(this.richTextBox28);
@@ -273,6 +277,45 @@
             this.groupBox3.TabIndex = 68;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "INFORMACION FINAL";
+            // 
+            // richTextBox34
+            // 
+            this.richTextBox34.Location = new System.Drawing.Point(907, 114);
+            this.richTextBox34.MaxLength = 20;
+            this.richTextBox34.Name = "richTextBox34";
+            this.richTextBox34.Size = new System.Drawing.Size(173, 34);
+            this.richTextBox34.TabIndex = 97;
+            this.richTextBox34.Text = "";
+            this.richTextBox34.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox34_KeyPress);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(854, 117);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(39, 17);
+            this.label28.TabIndex = 96;
+            this.label28.Text = "CEC:";
+            // 
+            // richTextBox33
+            // 
+            this.richTextBox33.Location = new System.Drawing.Point(612, 117);
+            this.richTextBox33.MaxLength = 23;
+            this.richTextBox33.Name = "richTextBox33";
+            this.richTextBox33.Size = new System.Drawing.Size(173, 34);
+            this.richTextBox33.TabIndex = 95;
+            this.richTextBox33.Text = "";
+            this.richTextBox33.TextChanged += new System.EventHandler(this.richTextBox33_TextChanged);
+            this.richTextBox33.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox33_KeyPress);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(565, 120);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(40, 17);
+            this.label22.TabIndex = 94;
+            this.label22.Text = "DIAN";
             // 
             // richTextBox31
             // 
@@ -328,9 +371,10 @@
             this.label25.AutoSize = true;
             this.label25.Location = new System.Drawing.Point(1141, 33);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(222, 17);
+            this.label25.Size = new System.Drawing.Size(222, 51);
             this.label25.TabIndex = 65;
-            this.label25.Text = "21. Instrucciones al Transportista:";
+            this.label25.Text = "21. Instrucciones al Transportista:\r\n      (Presione Enter luego de \r\n       ingr" +
+    "esar la bodega)";
             // 
             // label24
             // 
@@ -352,6 +396,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Controls.Add(this.richTextBox25);
             this.groupBox2.Controls.Add(this.richTextBox26);
             this.groupBox2.Controls.Add(this.richTextBox27);
@@ -364,30 +410,41 @@
             this.groupBox2.Controls.Add(this.richTextBox18);
             this.groupBox2.Controls.Add(this.richTextBox17);
             this.groupBox2.Controls.Add(this.richTextBox16);
-            this.groupBox2.Controls.Add(this.label32);
-            this.groupBox2.Controls.Add(this.label31);
-            this.groupBox2.Controls.Add(this.label28);
-            this.groupBox2.Controls.Add(this.label29);
-            this.groupBox2.Controls.Add(this.label30);
             this.groupBox2.Controls.Add(this.label27);
-            this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.label21);
-            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Location = new System.Drawing.Point(68, 453);
+            this.groupBox2.Location = new System.Drawing.Point(68, 451);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(1701, 187);
+            this.groupBox2.Size = new System.Drawing.Size(831, 191);
             this.groupBox2.TabIndex = 67;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "GASTOS A PAGAR";
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(694, 17);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(91, 17);
+            this.label20.TabIndex = 91;
+            this.label20.Text = "Tipo Moneda";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(185, 17);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(72, 17);
+            this.label35.TabIndex = 90;
+            this.label35.Text = "Remitente";
+            // 
             // richTextBox25
             // 
-            this.richTextBox25.Location = new System.Drawing.Point(1387, 130);
+            this.richTextBox25.Location = new System.Drawing.Point(648, 140);
             this.richTextBox25.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox25.MaxLength = 3;
             this.richTextBox25.Name = "richTextBox25";
@@ -397,7 +454,7 @@
             // 
             // richTextBox26
             // 
-            this.richTextBox26.Location = new System.Drawing.Point(1387, 82);
+            this.richTextBox26.Location = new System.Drawing.Point(648, 93);
             this.richTextBox26.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox26.MaxLength = 3;
             this.richTextBox26.Name = "richTextBox26";
@@ -407,7 +464,7 @@
             // 
             // richTextBox27
             // 
-            this.richTextBox27.Location = new System.Drawing.Point(1387, 33);
+            this.richTextBox27.Location = new System.Drawing.Point(648, 46);
             this.richTextBox27.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox27.MaxLength = 3;
             this.richTextBox27.Name = "richTextBox27";
@@ -417,7 +474,7 @@
             // 
             // richTextBox22
             // 
-            this.richTextBox22.Location = new System.Drawing.Point(980, 130);
+            this.richTextBox22.Location = new System.Drawing.Point(481, 140);
             this.richTextBox22.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox22.MaxLength = 20;
             this.richTextBox22.Name = "richTextBox22";
@@ -428,7 +485,7 @@
             // 
             // richTextBox23
             // 
-            this.richTextBox23.Location = new System.Drawing.Point(980, 82);
+            this.richTextBox23.Location = new System.Drawing.Point(481, 93);
             this.richTextBox23.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox23.MaxLength = 20;
             this.richTextBox23.Name = "richTextBox23";
@@ -439,7 +496,7 @@
             // 
             // richTextBox24
             // 
-            this.richTextBox24.Location = new System.Drawing.Point(980, 33);
+            this.richTextBox24.Location = new System.Drawing.Point(481, 46);
             this.richTextBox24.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox24.MaxLength = 20;
             this.richTextBox24.Name = "richTextBox24";
@@ -450,7 +507,7 @@
             // 
             // richTextBox19
             // 
-            this.richTextBox19.Location = new System.Drawing.Point(531, 130);
+            this.richTextBox19.Location = new System.Drawing.Point(314, 140);
             this.richTextBox19.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox19.MaxLength = 3;
             this.richTextBox19.Name = "richTextBox19";
@@ -460,7 +517,7 @@
             // 
             // richTextBox20
             // 
-            this.richTextBox20.Location = new System.Drawing.Point(531, 82);
+            this.richTextBox20.Location = new System.Drawing.Point(314, 93);
             this.richTextBox20.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox20.MaxLength = 3;
             this.richTextBox20.Name = "richTextBox20";
@@ -470,7 +527,7 @@
             // 
             // richTextBox21
             // 
-            this.richTextBox21.Location = new System.Drawing.Point(531, 33);
+            this.richTextBox21.Location = new System.Drawing.Point(314, 46);
             this.richTextBox21.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox21.MaxLength = 3;
             this.richTextBox21.Name = "richTextBox21";
@@ -482,7 +539,7 @@
             // 
             // richTextBox18
             // 
-            this.richTextBox18.Location = new System.Drawing.Point(147, 130);
+            this.richTextBox18.Location = new System.Drawing.Point(147, 140);
             this.richTextBox18.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox18.MaxLength = 20;
             this.richTextBox18.Name = "richTextBox18";
@@ -493,7 +550,7 @@
             // 
             // richTextBox17
             // 
-            this.richTextBox17.Location = new System.Drawing.Point(147, 82);
+            this.richTextBox17.Location = new System.Drawing.Point(147, 93);
             this.richTextBox17.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox17.MaxLength = 20;
             this.richTextBox17.Name = "richTextBox17";
@@ -504,7 +561,7 @@
             // 
             // richTextBox16
             // 
-            this.richTextBox16.Location = new System.Drawing.Point(147, 33);
+            this.richTextBox16.Location = new System.Drawing.Point(147, 46);
             this.richTextBox16.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox16.MaxLength = 20;
             this.richTextBox16.Name = "richTextBox16";
@@ -513,68 +570,14 @@
             this.richTextBox16.Text = "";
             this.richTextBox16.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox16_KeyPress);
             // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(745, 134);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(223, 17);
-            this.label32.TabIndex = 70;
-            this.label32.Text = "17.11 Monto a cargo Destinatario:";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(745, 85);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(215, 17);
-            this.label31.TabIndex = 69;
-            this.label31.Text = "17.7 Monto a cargo Destinatario:";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(1205, 134);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(155, 17);
-            this.label28.TabIndex = 68;
-            this.label28.Text = "17.12 Tipo de moneda:";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(1205, 85);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(147, 17);
-            this.label29.TabIndex = 67;
-            this.label29.Text = "17.8 Tipo de moneda:";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(1205, 36);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(147, 17);
-            this.label30.TabIndex = 66;
-            this.label30.Text = "17.4 Tipo de moneda:";
-            // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(745, 36);
+            this.label27.Location = new System.Drawing.Point(510, 17);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(215, 17);
+            this.label27.Size = new System.Drawing.Size(84, 17);
             this.label27.TabIndex = 65;
-            this.label27.Text = "17.3 Monto a cargo Destinatario:";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(364, 134);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(155, 17);
-            this.label22.TabIndex = 64;
-            this.label22.Text = "17.10 Tipo de moneda:";
+            this.label27.Text = "Destinatario";
             // 
             // label21
             // 
@@ -584,15 +587,6 @@
             this.label21.Size = new System.Drawing.Size(125, 17);
             this.label21.TabIndex = 63;
             this.label21.Text = "17.9 Otros gastos:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(364, 85);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(147, 17);
-            this.label20.TabIndex = 62;
-            this.label20.Text = "17.6 Tipo de moneda:";
             // 
             // label19
             // 
@@ -606,16 +600,16 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(364, 36);
+            this.label18.Location = new System.Drawing.Point(328, 17);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(147, 17);
+            this.label18.Size = new System.Drawing.Size(91, 17);
             this.label18.TabIndex = 60;
-            this.label18.Text = "17.2 Tipo de moneda:";
+            this.label18.Text = "Tipo Moneda";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 36);
+            this.label17.Location = new System.Drawing.Point(16, 49);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(112, 17);
             this.label17.TabIndex = 59;
@@ -623,8 +617,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.richTextBox2);
             this.groupBox1.Controls.Add(this.richTextBox1);
+            this.groupBox1.Controls.Add(this.richTextBox2);
             this.groupBox1.Controls.Add(this.richTextBox8);
             this.groupBox1.Controls.Add(this.label33);
             this.groupBox1.Controls.Add(this.richTextBox32);
@@ -664,35 +658,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "INFORMACION DE LA CARGA";
             // 
-            // richTextBox2
-            // 
-            this.richTextBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.richTextBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.richTextBox2.Location = new System.Drawing.Point(824, 32);
-            this.richTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBox2.Multiline = true;
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(257, 62);
-            this.richTextBox2.TabIndex = 63;
-            // 
             // richTextBox1
             // 
-            this.richTextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.richTextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.richTextBox1.Location = new System.Drawing.Point(267, 32);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBox1.Multiline = true;
+            this.richTextBox1.Location = new System.Drawing.Point(265, 32);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(255, 62);
-            this.richTextBox1.TabIndex = 62;
+            this.richTextBox1.Size = new System.Drawing.Size(256, 64);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(824, 32);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(257, 61);
+            this.richTextBox2.TabIndex = 2;
+            this.richTextBox2.Text = "";
             // 
             // richTextBox8
             // 
-            this.richTextBox8.Location = new System.Drawing.Point(1555, 255);
+            this.richTextBox8.Location = new System.Drawing.Point(1524, 255);
             this.richTextBox8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBox8.MaxLength = 10;
+            this.richTextBox8.MaxLength = 12;
             this.richTextBox8.Name = "richTextBox8";
-            this.richTextBox8.Size = new System.Drawing.Size(119, 34);
+            this.richTextBox8.Size = new System.Drawing.Size(171, 34);
             this.richTextBox8.TabIndex = 74;
             this.richTextBox8.Text = "";
             this.richTextBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox8_KeyPress);
@@ -700,7 +688,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(1419, 262);
+            this.label33.Location = new System.Drawing.Point(1389, 262);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(129, 17);
             this.label33.TabIndex = 79;
@@ -708,11 +696,11 @@
             // 
             // richTextBox32
             // 
-            this.richTextBox32.Location = new System.Drawing.Point(1287, 255);
+            this.richTextBox32.Location = new System.Drawing.Point(1222, 255);
             this.richTextBox32.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBox32.MaxLength = 10;
+            this.richTextBox32.MaxLength = 12;
             this.richTextBox32.Name = "richTextBox32";
-            this.richTextBox32.Size = new System.Drawing.Size(119, 34);
+            this.richTextBox32.Size = new System.Drawing.Size(166, 34);
             this.richTextBox32.TabIndex = 73;
             this.richTextBox32.Text = "";
             this.richTextBox32.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox32_KeyPress);
@@ -767,6 +755,7 @@
             this.richTextBox10.Size = new System.Drawing.Size(257, 64);
             this.richTextBox10.TabIndex = 71;
             this.richTextBox10.Text = "";
+            this.richTextBox10.TextChanged += new System.EventHandler(this.richTextBox10_TextChanged);
             // 
             // richTextBox11
             // 
@@ -869,7 +858,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(1141, 258);
+            this.label13.Location = new System.Drawing.Point(1096, 262);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(127, 17);
             this.label13.TabIndex = 58;
@@ -890,9 +879,10 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(15, 245);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(196, 34);
+            this.label11.Size = new System.Drawing.Size(237, 51);
             this.label11.TabIndex = 56;
-            this.label11.Text = "11. Marcas y Números de los \r\n      bultos:";
+            this.label11.Text = "11. Números de bultos y Marcas:\r\n      (ingrese Enter luego de ingresar\r\n      el" +
+    " número)";
             // 
             // label10
             // 
@@ -926,9 +916,10 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(1141, 105);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(233, 34);
+            this.label7.Size = new System.Drawing.Size(233, 51);
             this.label7.TabIndex = 52;
-            this.label7.Text = "7. Lugar, país y fecha de embarque\r\n    de las mercancías:";
+            this.label7.Text = "7. Lugar, país y fecha de embarque\r\n    de las mercancías: (coloque una\r\n    coma" +
+    " despues del país)";
             // 
             // label6
             // 
@@ -1051,15 +1042,8 @@
         public System.Windows.Forms.RichTextBox richTextBox18;
         public System.Windows.Forms.RichTextBox richTextBox17;
         public System.Windows.Forms.RichTextBox richTextBox16;
-        public System.Windows.Forms.Label label32;
-        public System.Windows.Forms.Label label31;
-        public System.Windows.Forms.Label label28;
-        public System.Windows.Forms.Label label29;
-        public System.Windows.Forms.Label label30;
         public System.Windows.Forms.Label label27;
-        public System.Windows.Forms.Label label22;
         public System.Windows.Forms.Label label21;
-        public System.Windows.Forms.Label label20;
         public System.Windows.Forms.Label label19;
         public System.Windows.Forms.Label label18;
         public System.Windows.Forms.Label label17;
@@ -1094,8 +1078,6 @@
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.TextBox richTextBox2;
-        public System.Windows.Forms.TextBox richTextBox1;
         public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.PictureBox pictureBox3;
@@ -1104,5 +1086,13 @@
         public System.Windows.Forms.GroupBox groupBox4;
         public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBox2;
+        public System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.RichTextBox richTextBox33;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.RichTextBox richTextBox34;
+        private System.Windows.Forms.Label label28;
     }
 }

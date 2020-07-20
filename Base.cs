@@ -57,11 +57,13 @@ namespace Documentos
                         "id_organizacion int not null constraint FK_organizacion references Organizaciones_y_direcciones (id_organizacion)," +
                         "papel_organizacion char(12))";
 
+            
+
             string c4 = "CREATE TABLE cartas_final"+
                 "(llave AUTOINCREMENT PRIMARY KEY," +
                 "id_carta int not null constraint FK_carta2 references cartas_de_porte (llave)," +
-                "c13_1 float," +
-                "c13_2 float," +
+                "c13_1 char(12)," +
+                "c13_2 char(12)," +
                 "c14 float," +
                 "c15 char(10)," +
                 "c16 char(50)," +
@@ -80,7 +82,8 @@ namespace Documentos
                 "c18 char(100)," +
                 "c19 char(50)," +
                 "c21 char(165)," +
-                "c22 char(165))";
+                "c22 char(165)," +
+                "dian char(45))";
 
             //Manifiestos
             string c5 = "CREATE TABLE Conductores" +                        
@@ -128,8 +131,8 @@ namespace Documentos
                 "c24 char(20)," +
                 "c25 char(45)," +
                 "c26 char(45)," +
-                "c27 int," +
-                "c28 char(180)," +
+                "c27 char(125)," +
+                "c28 char(25)," +
                 "c29 MEMO," +
                 "c30 char(180)," +
                 "c31 char(180)," +
